@@ -16,7 +16,9 @@ const morgan = require('morgan');
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :date[clf]'));
 
 // configure body parser
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(bodyParser.json());
 app.use(function (error, req, res, next) {
     //Catch json error
@@ -72,7 +74,7 @@ app.use('/api', router);
 
 // create client for testing only
 // let clientCtrl  = require('./modules/controllers/clientCtrl');
-// clientCtrl.createClient({name: "Mark", email: "mark@xyz.com", city: "London", country: "United Kingdom", password: "test123"});
+// clientCtrl.createClient({name: "Sam", email: "sam@xyz.com", city: "Dubai", country: "UAE", password: "test123"});
 
 // START THE SERVER
 // =============================================================================

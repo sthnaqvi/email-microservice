@@ -27,7 +27,7 @@ const verifyAuth = (req, res, cb) => {
     });
 };
 
-router.route('/login').get(clientCtrl.login);
+router.route('/login').post(clientCtrl.login);
 
 router.route('/create-user').post(function (req, res) {
     verifyAuth(req, res, function (decode) {

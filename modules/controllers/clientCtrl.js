@@ -2,6 +2,8 @@
  * Created by Tauseef Naqvi on 09-06-2018.
  */
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const config = require('../../config');
 const utils = require('../../utils');
 const Client = require('../../models/clientModel');
 const User = require('../../models/userModel');
@@ -15,14 +17,30 @@ const login = (req, res) => {
     if (!password)
         return res.status(400).json({success: false, msg: "Password can't be null."});
 
+    let clientDetails;
     Client.findOne({email})
         .then((client) => {
             if (!client)
                 throw Error('NoEmail');
+            clientDetails = client;
+            return bcrypt.compare(password, client.passwordHash);
+        })
+        .then((isCorrect)=>{
+            if(!isCorrect)
+                throw Error("InvalidPassword");
+            jwt.sign({email:clientDetails.email,clientId:clientDetails._id},config.secret,(err,token)=>{
+              if(err)
+                  throw err;
+              res.json({success:true,token});
+            })
         })
         .catch((error) => {
             if (error.message === 'NoEmail')
                 return res.status(400).json({success: false, msg: "Email not available in client database."});
+            if (error.message === 'InvalidPassword')
+                return res.status(401).json({success: false, msg: "Invalid Password."});
+            //TODO: send particular error on every error
+            console.log(error)
         })
 };
 
@@ -31,7 +49,7 @@ const createUser = (req, res) => {
 
     const name = req.body.name;
     const email = req.body.email;
-    const timeZone = req.body.timeZone;
+    const timeZone = req.body.timezone;
     const city = req.body.city;
     const country = req.body.country;
 
@@ -52,8 +70,8 @@ const createUser = (req, res) => {
     newUser.country = country;
     newUser.clientId = clientId;
     newUser.save()
-        .then((result) => {
-            res.json({success: true, msg: "New user created."})
+        .then((user) => {
+            res.json({success: true, msg: "New user created.",user})
         })
         .catch((error) => {
             console.log(error);
