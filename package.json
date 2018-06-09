@@ -9,7 +9,9 @@
   "author": "Sayed Tauseef Naqvi <tauseef.naqvi786@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "bluebird": "^3.5.1",
+    "express": "^4.16.3",
     "jsonwebtoken": "^8.2.2",
     "mongoose": "^5.1.4",
     "morgan": "^1.9.0",

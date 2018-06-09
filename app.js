@@ -64,12 +64,15 @@ router.use((req, res, next) => {
 // import our routers
 // ----------------------------------------------------
 let routers = require('./modules/routers');
-router.use(routers);
+router.use('/client',routers);
 
 // register our routers
 // -------------------------------
 app.use('/api', router);
 
+// create client for testing only
+// let clientCtrl  = require('./modules/controllers/clientCtrl');
+// clientCtrl.createClient({name: "Mark", email: "mark@xyz.com", city: "London", country: "United Kingdom", password: "test123"});
 
 // START THE SERVER
 // =============================================================================

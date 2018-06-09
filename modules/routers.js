@@ -7,7 +7,6 @@ const config = require('../config');
 const utils = require('../utils');
 const jwt = require('jsonwebtoken');
 const clientCtrl = require('./controllers/clientCtrl');
-const userCtrl = require('./controllers/userCtrl');
 
 const getCredentials = (req) => {
     let identity = req.header('Authorization');
@@ -28,17 +27,12 @@ const verifyAuth = (req, res, cb) => {
     });
 };
 
-router.route('/client').post(function (req, res) {
-    verifyAuth(req, res, function (decode) {
-            req.body.tokenData = decode;
-        clientCtrl.createClient(req, res);
-    })
-});
+router.route('/login').get(clientCtrl.login);
 
-router.route('/user').post(function (req, res) {
+router.route('/create-user').post(function (req, res) {
     verifyAuth(req, res, function (decode) {
             req.body.tokenData = decode;
-        userCtrl.createClient(req, res);
+        clientCtrl.createUser(req, res);
     })
 });
 module.exports = router;
