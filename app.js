@@ -6,7 +6,7 @@
 // import the packages we need
 const express = require('express');                   //import express module
 const bodyParser = require('body-parser');            //import bodyparser
-let mongoose = require('mongoose');                 //import mongoose
+const mongoose = require('mongoose');                 //import mongoose
 mongoose.Promise = require('bluebird'); // set Promise provider to bluebird
 const app = express();                                //import express contractor
 const config = require('./config');                   //import config
@@ -27,7 +27,7 @@ app.use(function (error, req, res, next) {
 
 //Mongoose Setup
 // =============================================================================
-let checkAndConnectDb = () => {
+const checkAndConnectDb = () => {
     // Connect To Database
     mongoose.connect(config.database, function (err) {
         if (err) {
@@ -65,7 +65,7 @@ router.use((req, res, next) => {
 
 // import our routers
 // ----------------------------------------------------
-let routers = require('./modules/routers');
+const routers = require('./modules/routers');
 router.use('/client',routers);
 
 // register our routers
@@ -75,6 +75,10 @@ app.use('/api', router);
 // create client for testing only
 // let clientCtrl  = require('./modules/controllers/clientCtrl');
 // clientCtrl.createClient({name: "Sam", email: "sam@xyz.com", city: "Dubai", country: "UAE", password: "test123"});
+
+//Run cron
+const cron = require('./cron');
+
 
 // START THE SERVER
 // =============================================================================

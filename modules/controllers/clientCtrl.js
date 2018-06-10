@@ -7,6 +7,7 @@ const config = require('../../config');
 const utils = require('../../utils');
 const Client = require('../../models/clientModel');
 const User = require('../../models/userModel');
+const cron = require('../../cron');
 
 const login = (req, res) => {
     const email = req.body.email;
@@ -25,13 +26,13 @@ const login = (req, res) => {
             clientDetails = client;
             return bcrypt.compare(password, client.passwordHash);
         })
-        .then((isCorrect)=>{
-            if(!isCorrect)
+        .then((isCorrect) => {
+            if (!isCorrect)
                 throw Error("InvalidPassword");
-            jwt.sign({email:clientDetails.email,clientId:clientDetails._id},config.secret,(err,token)=>{
-              if(err)
-                  throw err;
-              res.json({success:true,token});
+            jwt.sign({email: clientDetails.email, clientId: clientDetails._id}, config.secret, (err, token) => {
+                if (err)
+                    throw err;
+                res.json({success: true, token});
             })
         })
         .catch((error) => {
@@ -71,7 +72,8 @@ const createUser = (req, res) => {
     newUser.clientId = clientId;
     newUser.save()
         .then((user) => {
-            res.json({success: true, msg: "New user created.",user})
+            cron.findAndUpdateOffset(offset);
+            res.json({success: true, msg: "New user created.", user})
         })
         .catch((error) => {
             console.log(error);
