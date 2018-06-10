@@ -49,7 +49,7 @@ const createUser = (req, res) => {
 
     const name = req.body.name;
     const email = req.body.email;
-    const timeZone = req.body.timezone;
+    const offset = req.body.offset;
     const city = req.body.city;
     const country = req.body.country;
 
@@ -65,7 +65,7 @@ const createUser = (req, res) => {
     let newUser = new User();
     newUser.name = name;
     newUser.email = email;
-    newUser.timeZone = timeZone;
+    newUser.offset = offset;
     newUser.city = city;
     newUser.country = country;
     newUser.clientId = clientId;

@@ -8,8 +8,8 @@ let Schema = mongoose.Schema;
 let userSchema = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique:true},
-    //store timezone in minutes (eg india(IST) timezone is +5:30  = +330
-    timeZone: {type: Number, required: true},
+    //UTC offset in minutes (eg: India UTC offset is +5:30 hr  = +330 min , Brazil -2:00 = -180 min)
+    offset: {type: Number, required: true},
     //to identify client of the user
     clientId:{type: Schema.Types.ObjectId, ref: 'Client'},
     city:{type:String},
