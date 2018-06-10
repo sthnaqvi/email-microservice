@@ -2,6 +2,34 @@
  * Created by Tauseef Naqvi on 09-06-2018.
  */
 const nodemailer = require('nodemailer');
+const mongoose = require('mongoose');//import mongoose
+mongoose.Promise = require('bluebird'); // set Promise provider to bluebird
+const config = require('./config');
+
+//Mongoose Setup
+// =============================================================================
+module.exports.connectDatabase = () => {
+    return new Promise((resolve, reject) => {
+        // Connect To Database
+        mongoose.connect(config.database, function (err) {
+            if (err) {
+                reject(err);
+                console.log('Database connect error: ' + err);
+            }
+        });
+
+        // On Connection
+        mongoose.connection.on('connected', () => {
+            resolve();
+
+        });
+
+        // On Error
+        mongoose.connection.on('error', (err) => {
+            reject(err)
+        });
+    });
+};
 
 // Checks if the mongoose connection readyState is either 1 (connected) or 2 (connecting)
 module.exports.isDbConnected = (dbm) => {

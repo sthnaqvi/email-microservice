@@ -71,15 +71,17 @@ const scheduleJob = (offset) => {
     });
 };
 
-//to find total unique offsets in user collection
-User.distinct('offset')
-    .then((offsets) => {
-        offsets.forEach((offset) => {
-            //scheduleJob for every timezone
-            scheduleJob(offset);
+module.exports.startCron = ()=>{
+    // find total unique offsets in user collection
+    User.distinct('offset')
+        .then((offsets) => {
+            offsets.forEach((offset) => {
+                //scheduleJob for every timezone
+                scheduleJob(offset);
+            })
         })
-    })
-    .catch(console.log);
+        .catch(console.log);
+};
 
 //check offset is scheduled of not if not scheduled then add new offset
 module.exports.findAndUpdateOffset = (offset) => {

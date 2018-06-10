@@ -4,6 +4,7 @@
   "description": "send Email to all the users at specific time according to different time zones of the users",
   "main": "app.js",
   "scripts": {
+    "start":"node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sayed Tauseef Naqvi <tauseef.naqvi786@gmail.com>",
