@@ -1,7 +1,7 @@
 {
   "name": "email-microservice",
   "version": "0.0.1",
-  "description": "Send email to all users at a specific time with different time zone",
+  "description": "send Email to all the users at specific time according to different time zones of the users",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

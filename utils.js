@@ -25,7 +25,6 @@ module.exports.validateEmail = (email) => {
 
 //send good morning email function
 module.exports.sendGoodMorningEmail = (user) => {
-    return new Promise((resolve, reject) => {
         // create reusable transporter object using the default SMTP transport
         let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -45,9 +44,9 @@ module.exports.sendGoodMorningEmail = (user) => {
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions, (err, info) => {
-            if (err)
-                return reject(err);
-            resolve(info);
+            if (err){
+                //TODO: update fail status
+            }
+            //if require success report write code
         });
-    })
 };
